@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Liste des Paiements</h2>
+    <form method="GET" class="d-flex mb-3">
+        <input type="text" name="q" value="{{ query }}" class="form-control me-2" placeholder="Rechercher un élève...">
+        
+        <select name="methode" class="form-select me-2">
+            <option value="">Méthode de paiement</option>
+            <option value="Stripe" {% if filtre_methode == "Stripe" %}selected{% endif %}>Carte Bancaire</option>
+            <option value="Flutterwave" {% if filtre_methode == "Flutterwave" %}selected{% endif %}>Mobile Money</option>
+        </select>
+        
+        <select name="status" class="form-select me-2">
+            
+            <option value="Payé" {% if filtre_status == "Payé" %}selected{% endif %}>Payé</option>
+            <option value="En attente" {% if filtre_status == "En attente" %}selected{% endif %}>En attente</option>
+        </select>
+        
+        <button type="submit" class="btn btn-primary">Filtrer</button>
+    </form>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Élève</th>
+                <th>Montant</th>
+                <th>Méthode</th>
+                <th>Statut</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paiement in paiements %}
+            <tr>
+                <td>{{ paiement.eleve.nom }}</td>
+                <td>{{ paiement.montant }} FCFA</td>
+                <td>{{ paiement.methode_paiement }}</td>
+                <td>
+                    <span class="badge {% if paiement.status == 'Payé' %}bg-success{% else %}bg-warning{% endif %}">
+                        {{ paiement.status }}
+                    </span>
+                </td>
+                <td>{{ paiement.date_paiement|date:"d/m/Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Aucun paiement trouvé</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination">
+            {% if paiements.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&q={{ query }}&methode={{ filtre_methode }}&status={{ filtre_status }}">&laquo; Premier</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paiements.previous_page_number }}&q={{ query }}&methode={{ filtre_methode }}&status={{ filtre_status }}">Précédent</a>
+                </li>
+            {% endif %}
+    
+            <li class="page-item active"><span class="page-link">{{ paiements.number }}</span></li>
+    
+            {% if paiements.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paiements.next_page_number }}&q={{ query }}&methode={{ filtre_methode }}&status={{ filtre_status }}">Suivant</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paiements.paginator.num_pages }}&q={{ query }}&methode={{ filtre_methode }}&status={{ filtre_status }}">Dernier &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+    
+</div>
+{% endblock %}

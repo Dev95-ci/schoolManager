@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+
+{% block content %}
+  <div class="container">
+    <h2>Connexion</h2>
+    
+    {% if messages %}
+      <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <form method="POST">
+      {% csrf_token %}
+      
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Nom d'utilisateur</label>
+        {{ form.username|add_class:"form-control" }}
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Mot de passe</label>
+        {{ form.password|add_class:"form-control" }}
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+  </div>
+{% endblock %}

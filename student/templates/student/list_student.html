@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Élèves{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-center">Liste des Élèves</h2>
+
+    <!-- Formulaire de Recherche et Filtrage -->
+    <form method="GET" class="mb-4 d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Rechercher un élève..." value="{{ search_query }}">
+        <select name="classe" class="form-select me-2">
+            <option value="">Toutes les classes</option>
+            {% for classe in classes %}
+                <option value="{{ classe.nom }}" {% if classe.nom == classe_filter %}selected{% endif %}>{{ classe.nom }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrer</button>
+    </form>
+
+    <!-- Table des élèves -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Classe</th>
+                <th>Date Naissance</th>
+                <th>Téléphone</th>
+                <th>Montant Total Dû</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for eleve in page_obj %}
+            <tr>
+                <td>{{ eleve.nom }}</td>
+                <td>{{ eleve.prenom }}</td>
+                <td>{{ eleve.classe.nom }}</td>
+                <td>{{ eleve.date_naissance }}</td>
+                <td>{{ eleve.telephone }}</td>
+                <td>{{ eleve.montant_total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Aucun élève trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&search={{ search_query }}&classe={{ classe_filter }}">Début</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}&classe={{ classe_filter }}">Précédent</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}&classe={{ classe_filter }}">Suivant</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}&classe={{ classe_filter }}">Fin</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+
+    
+
+{% endblock %}
+
+
+

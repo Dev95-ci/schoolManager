@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load forms %}
+
+
+{% block content %}
+    <main class="container">
+
+         
+        {% comment %} <form class="row g-3" method="post">
+            {% csrf_token %}
+
+            {% extends 'base.html' %} {% endcomment %}
+
+            
+            <div class="container">
+                <h2>Ajouter un Élève</h2>
+                {% if succes %}
+                    <div class="alert alert-success" role="alert">
+                        
+                        {{ succes }}
+                      
+                    </div>
+                {% elif erreur %}
+                    <div class="alert alert-danger" role="alert">
+                        
+                        {{ erreur }}
+                        
+                    </div>
+                {% endif %}
+
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_nom" class="form-label">Matricule</label>
+                        {{ form.matricule | add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_nom" class="form-label">Nom</label>
+                        {{ form.nom | add_class:"form-control" }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_prenom" class="form-label">Prénom</label>
+                        {{ form.prenom | add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">Téléphone</label>
+                        {{ form.telephone | add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_prenom" class="form-label">Date Naissance</label>
+                        {{ form.date_naissance | add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_prenom" class="form-label">Montant à Payer</label>
+                        {{ form.montant_total | add_class:"form-control" }}
+                    </div>
+                    
+            
+            
+                    <div class="mb-3">
+                        <label for="id_classe" class="form-label">Classe</label>
+                        {{ form.classe|add_class:"form-select" }}
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+            </div>
+            
+            
+
+
+            {% comment %} <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">ajout d'un élève</h5>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="username" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="text" name="firstname" value="xxxxx">
+            </div>
+            <div class="col-md-6">
+                <label for="lastname" class="form-label">Prenom</label>
+                <input type="text" class="form-control" id="text" name="lastname" value="xxxx">
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Date Naissance</label>
+                <input type="date" class="form-control" id="" name="date_naiss" value="xx/xx/xxxx">
+            </div>
+            <div class="col-6">
+                <label for="tel" class="form-label">Telephone</label>
+                <input type="tel" class="form-control" id="tel"  name="tel" value="xx xx xx xx xx">
+            </div>
+            <div class="col-md-6">
+                <label for="montant" class="form-label">Montant total</label>
+                <input type="text" class="form-control" id="" name="montant" value="xxxx">
+            </div>
+
+            <select class="form-select form-select-sm" aria-label="Small select example">
+                <option selected>selectionnez une classe</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+
+            
+      
+    
+            <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Enregistré</button>
+            </div> {% endcomment %}
+        </form>    
+    </main>
+{% endblock %}
