@@ -13,7 +13,7 @@ class Paiement(models.Model):
     ])
 
     def __str__(self):
-        return f"Paiement {self.montant}€ - {self.eleve.nom} {self.eleve.prenom}"
+        return f"Paiement {self.montant}€ - {self.eleve.nom} {self.eleve.prenom} {self.eleve.classe}"
     
     def save(self, *args, **kwargs):
         """Met à jour le solde de l'élève après le paiement"""
